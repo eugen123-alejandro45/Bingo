@@ -27,13 +27,51 @@ public class Card {
         }
     }
 
+    public boolean isLine() {
+        for (int row = 0; row < checked.length; row++) {
+            boolean line = true;
+            for (int col = 0; col < checked[0].length; col++) {
+                if (!checked[row][col]) {
+                    line = false;
+                    break;
+                }
+            }
+            if (line) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean isBingo() {
+        for (int row = 0; row < checked.length; row++) {
+            for (int col = 0; col < checked[0].length; col++) {
+                if (checked[row][col]) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
     @Override
     public String toString() {
         String s = "";
         for (int row = 0; row < numbers.length; row++) {
+            boolean first = true;
             for (int col = 0; col < numbers[0].length; col++) {
-                
+                if (first) {
+                    first = false;
+                } else {
+                    s += ", ";
+                }
+                if (checked[row][col]) {
+                    s += "[" + numbers[row][col] + "]";
+                } else {
+                    s += numbers[row][col] + "";
+                }
             }
+            s += "\n";
         }
         return s;
     }
