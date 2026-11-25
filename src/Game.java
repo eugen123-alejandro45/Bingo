@@ -31,12 +31,37 @@ public class Game {
         while (!isBingo) {
             int n = drum.extractBall();
             for (int i = 0; i < cards.length; i++) {
-                isBingo = true;
-                System.out.println("");
-                System.out.println("");
-                System.out.println(cards[i]);
-
+                cards[i].markNumber(n);
+                if (cards[i].isBingo()) {
+                    isBingo = true;
+                    System.out.println("BINGO by card n." + (i + 1) + ":");
+                    System.out.println(cards[i]);
+                }
             }
         }
+    }
+
+    public void printExtractedNumbers() {
+        boolean[] marked = new boolean[91];
+        for (int i = 0; i < cards.length; i++) {
+            int[] numbers = cards[i].getMarketNumbers();
+            for (int j = 0; j < numbers.length; j++) {
+                if (numbers[j] != 0) {
+                    marked[numbers[j]] = true;
+                }
+            }
+        }
+        System.out.println("Extracted numbers: ");
+        for (int i = 0; i < marked.length; i++) {
+            if (marked[i]) {
+                System.out.print(i + " ");
+            }
+        }
+    }
+
+    public void play() {
+        playForLine();
+        playForBingo();
+        printExtractedNumbers();
     }
 }
